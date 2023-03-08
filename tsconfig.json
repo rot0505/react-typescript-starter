@@ -24,6 +24,12 @@
       "components/*": [
         "components/*"
       ],
+      "types/*": [
+        "types/*.ts"
+      ],
+      "api/*": [
+        "api/*.ts"
+      ]
     }
   },
   "include": [

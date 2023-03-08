@@ -1,30 +1,91 @@
-import { CheckboxVisibility, DetailsList, Stack } from "@fluentui/react";
-import { FunctionComponent } from "react";
+import React, { useState, useEffect, useMemo } from "react";
+import {
+  DetailsList,
+  CheckboxVisibility,
+  IColumn,
+  IGroup
+}
+  from "@fluentui/react";
+import { Question } from "types";
 
-const SurveyFreeText: FunctionComponent = () => {
-  const items = ["First item in list", "another one"];
+interface SurveyFreeTextProps {
+  textQuestions: Question[];
+}
 
-  const _onRenderColumn = (item?: any) => {
-    return <div data-is-focusable={true}>{item}</div>;
-  };
+interface Answer {
+  key: string;
+  text: string;
+}
+
+const SurveyFreeText: React.FC<SurveyFreeTextProps> = ({ textQuestions }) => {
+  const [answers, setAnswers] = useState<Answer[]>([]);
+  const [groups, setGroups] = useState<IGroup[]>([]);
+
+  const columns: IColumn[] = useMemo(
+    () => [
+      {
+        key: "text_answer",
+        name: "Text answers",
+        fieldName: "answer",
+        minWidth: 100,
+        maxWidth: 300,
+        isResizable: true,
+        onRender: (answer: Answer) => <div data-is-focusable>{answer.text || ""}</div>,
+      },
+    ],
+    []
+  );
+
+  useEffect(() => {
+    const initAnswers = () => {
+      const answers: Answer[] = [];
+      const groups: IGroup[] = [];
+      let startIndex = 0;
+
+      textQuestions.forEach((question: Question, index: number) => {
+        const { question_text, responses } = question;
+        const group: IGroup = {
+          key: `${index}`,
+          name: question_text,
+          startIndex,
+          count: responses.length,
+          level: 0,
+          isCollapsed: true
+        };
+        startIndex += responses.length;
+
+        const textResponses: string[] = responses as string[];
+        const questionAnswers: Answer[] = textResponses.map((response: string, i: number) => ({
+          key: `${index}-${i}`,
+          text: response,
+        }));
+
+        groups.push(group);
+        answers.push(...questionAnswers);
+      });
+
+      setGroups(groups);
+      setAnswers(answers);
+    };
+
+    if (textQuestions?.length) {
+      initAnswers();
+    }
+  }, [textQuestions]);
+
   return (
-    <Stack data-testid="FreeTextTable">
-      <DetailsList
-        checkboxVisibility={CheckboxVisibility.hidden}
-        items={items}
-        columns={[{ key: "Free text", name: "Free text", minWidth: 200 }]}
-        ariaLabelForSelectAllCheckbox="Toggle selection for all items"
-        ariaLabelForSelectionColumn="Toggle selection"
-        checkButtonAriaLabel="select row"
-        checkButtonGroupAriaLabel="select section"
-        groupProps={{
-          isAllGroupsCollapsed: true,
-          showEmptyGroups: true,
-        }}
-        onRenderItemColumn={_onRenderColumn}
-        compact={true}
-      />
-    </Stack>
+    <DetailsList
+      checkboxVisibility={CheckboxVisibility.hidden}
+      items={answers}
+      groups={groups}
+      columns={columns}
+      compact
+      groupProps={{ isAllGroupsCollapsed: true, showEmptyGroups: true }}
+      ariaLabelForSelectAllCheckbox="Toggle selection for all items"
+      ariaLabelForSelectionColumn="Toggle selection"
+      checkButtonAriaLabel="select row"
+      checkButtonGroupAriaLabel="select section"
+    />
   );
 };
 

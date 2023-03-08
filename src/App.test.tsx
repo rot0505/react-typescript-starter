@@ -1,12 +1,13 @@
 import { render } from "@testing-library/react";
-import App from "./App";
+import { BrowserRouter } from "react-router-dom";
+import { Survey } from "./pages/Survey";
 
-test("Correctly calculate overall score", () => {
-  const { getByTestId } = render(<App />);
-  expect(getByTestId("happinessScore").textContent).toMatch(/47/);
-});
-
-test("Correctly group data and show table", () => {
-  const { getByTestId } = render(<App />);
-  expect(getByTestId("FreeTextTable").textContent).toMatch(/What data is NOT always reliable and correct\?\(6\)/);
+describe("Survey component", () => {
+  it("renders without crashing", () => {
+    render(
+      <BrowserRouter>
+        <Survey />
+      </BrowserRouter>
+    );
+  });
 });

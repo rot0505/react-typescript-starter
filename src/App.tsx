@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Survey from "pages/Survey/Survey";
+import { Survey } from "pages/Survey";
 
 const App: React.FC = () => {
   return (
