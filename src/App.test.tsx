@@ -8,7 +8,5 @@ test("Correctly calculate overall score", () => {
 
 test("Correctly group data and show table", () => {
   const { getByTestId } = render(<App />);
-  expect(getByTestId("FreeTextTable").textContent).toMatch(
-    /What data is NOT always reliable and correct\?\(6\)/
-  );
+  expect(getByTestId("FreeTextTable").textContent).toMatch(/What data is NOT always reliable and correct\?\(6\)/);
 });
