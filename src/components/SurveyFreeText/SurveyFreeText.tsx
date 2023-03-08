@@ -1,7 +1,7 @@
 import { CheckboxVisibility, DetailsList, Stack } from "@fluentui/react";
 import { FunctionComponent } from "react";
 
-export const SurveyFreeText: FunctionComponent = () => {
+const SurveyFreeText: FunctionComponent = () => {
   const items = ["First item in list", "another one"];
 
   const _onRenderColumn = (item?: any) => {
@@ -27,3 +27,5 @@ export const SurveyFreeText: FunctionComponent = () => {
     </Stack>
   );
 };
+
+export default SurveyFreeText;

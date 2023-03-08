@@ -1,26 +1,15 @@
-import { FontIcon, initializeIcons, Stack, Text } from "@fluentui/react";
-import { SurveyFreeText } from "./components/surveys/survey-free-text";
-initializeIcons();
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Survey from "pages/Survey/Survey";
 
-function App() {
-  const happinessScore = 73;
-
+const App: React.FC = () => {
   return (
-    <Stack style={{ margin: 20 }}>
-      <h1>
-        <FontIcon iconName="ClipboardList" style={{ marginRight: "5px" }} />
-        Insert survey title here
-      </h1>
-
-      <h1 data-testid="happinessScore">
-        <FontIcon iconName="ChatBot" style={{ marginRight: "5px" }} />
-        {happinessScore} / 100
-      </h1>
-      <Stack>
-        <SurveyFreeText />
-      </Stack>
-    </Stack>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Survey />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
