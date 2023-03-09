@@ -15,8 +15,11 @@ const Survey: React.FC = () => {
   });
 
   useEffect(() => {
-    const result = getSurveyResult();
-    setSurvey(result);
+    const init = async () => {
+      const result = await getSurveyResult();
+      setSurvey(result);
+    };
+    init();
   }, []);
 
   const getCreatedAtFormatted = (): string => {

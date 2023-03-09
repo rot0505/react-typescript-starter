@@ -1,11 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import {
-  DetailsList,
-  CheckboxVisibility,
-  IColumn,
-  IGroup
-}
-  from "@fluentui/react";
+import { DetailsList, CheckboxVisibility, IColumn, IGroup } from "@fluentui/react";
 import { Question } from "types";
 
 interface SurveyFreeTextProps {
@@ -50,7 +44,7 @@ const SurveyFreeText: React.FC<SurveyFreeTextProps> = ({ textQuestions }) => {
           startIndex,
           count: responses.length,
           level: 0,
-          isCollapsed: true
+          isCollapsed: true,
         };
         startIndex += responses.length;
 
